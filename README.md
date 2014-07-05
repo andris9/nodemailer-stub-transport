@@ -1,6 +1,8 @@
 # Stub transport module for Nodemailer
 
-Applies for Nodemailer v1.x and not for v0.x where transports are built-in.
+Applies for Nodemailer v1.0
+
+Stub transport does not send anything, it builds the mail stream into a single Buffer and returns it with the sendMail callback. This is useful for testing the emails before actually sending anything.
 
 ## Usage
 
@@ -18,24 +20,14 @@ var stubTransport = require('nodemailer-stub-transport');
 Create a Nodemailer transport object
 
 ```javascript
-var transport = nodemailer.createTransport(stubTransport({
-    host: 'localhost',
-    port: 25,
-    auth: {
-        user: 'username',
-        pass: 'password'
-    }
-}));
+var transport = nodemailer.createTransport(stubTransport());
 ```
 
-## Using well-known services
-
-If you do not want to specify the hostname, port and security settings for a well known service, you can use it by its name.
+Send a message
 
 ```javascript
-stubTransport({
-    service: 'gmail',
-    auth: ..
+transport.sendMail(mailData, function(err, rawMessage){
+    console.log(rawMessage.toString());
 });
 ```
 
