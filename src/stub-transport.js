@@ -47,7 +47,10 @@ StubTransport.prototype.send = function(mail, callback) {
 
     message.on('end', function() {
         setImmediate(function() {
-            callback(null, Buffer.concat(chunks, chunklen));
+            callback(null, {
+                messageId: (mail.message.getHeader('message-id') || '').replace(/[<>\s]/g, ''),
+                response: Buffer.concat(chunks, chunklen)
+            });
         });
     });
 };

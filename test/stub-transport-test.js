@@ -4,7 +4,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 var chai = require('chai');
 var expect = chai.expect;
-var stubTransport = require('../lib/stub-transport');
+var stubTransport = require('../src/stub-transport');
 chai.Assertion.includeStack = true;
 var PassThrough = require('stream').PassThrough;
 
@@ -20,6 +20,10 @@ MockBuilder.prototype.getEnvelope = function() {
 
 MockBuilder.prototype.createReadStream = function() {
     return this.message;
+};
+
+MockBuilder.prototype.getHeader = function() {
+    return 'teretere';
 };
 
 describe('Stub Transport Tests', function() {
@@ -40,9 +44,9 @@ describe('Stub Transport Tests', function() {
                 from: 'test@valid.sender',
                 to: 'test@valid.recipient'
             }, message)
-        }, function(err, sentMessage) {
+        }, function(err, info) {
             expect(err).to.not.exist;
-            expect(sentMessage.toString()).to.equal(message);
+            expect(info.response.toString()).to.equal(message);
             done();
         });
     });

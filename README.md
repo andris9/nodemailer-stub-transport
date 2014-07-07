@@ -26,8 +26,8 @@ var transport = nodemailer.createTransport(stubTransport());
 Send a message
 
 ```javascript
-transport.sendMail(mailData, function(err, rawMessage){
-    console.log(rawMessage.toString());
+transport.sendMail(mailData, function(err, info){
+    console.log(info.response.toString());
 });
 ```
 
