@@ -1,8 +1,8 @@
 {
   "name": "nodemailer-stub-transport",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Stub transport for Nodemailer",
-  "main": "lib/stub-transport.js",
+  "main": "src/stub-transport.js",
   "scripts": {
     "test": "grunt"
   },
