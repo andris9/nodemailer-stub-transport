@@ -28,12 +28,24 @@ StubTransport.prototype.send = function(mail, callback) {
     var message = mail.message.createReadStream();
     var chunks = [];
     var chunklen = 0;
+    var envelope = mail.data.envelope || mail.message.getEnvelope();
 
-    this.emit('envelope', mail.data.envelope || mail.message.getEnvelope());
+    this.emit('log', {
+        type: 'envelope',
+        message: JSON.stringify(envelope)
+    });
+
+    this.emit('envelope', envelope);
 
     message.on('data', function(chunk) {
         chunks.push(chunk);
         chunklen += chunk.length;
+
+        this.emit('log', {
+            type: 'message',
+            message: chunk.toString()
+        });
+
         this.emit('data', chunk.toString());
     }.bind(this));
 
