@@ -4,6 +4,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 var chai = require('chai');
 var expect = chai.expect;
+var sinon = require('sinon');
 var stubTransport = require('../src/stub-transport');
 chai.Assertion.includeStack = true;
 var PassThrough = require('stream').PassThrough;
@@ -47,6 +48,28 @@ describe('Stub Transport Tests', function() {
         }, function(err, info) {
             expect(err).to.not.exist;
             expect(info.response.toString()).to.equal(message);
+            done();
+        });
+    });
+
+    it('Should fire the events', function(done) {
+        var spy = sinon.spy();
+        var client = stubTransport();
+        client.on('log', spy);
+
+        var message = new Array(1024).join('teretere, vana kere\n');
+
+        client.send({
+            data: {},
+            message: new MockBuilder({
+                from: 'test@valid.sender',
+                to: 'test@valid.recipient'
+            }, message)
+        }, function(err, info) {
+            expect(err).to.not.exist;
+            expect(info.response.toString()).to.equal(message);
+            expect(spy.callCount).to.be.equal(1);
+            expect(spy.firstCall.args).to.be.eql([{type: 'message', message: message}]);
             done();
         });
     });
