@@ -55,9 +55,11 @@ describe('Stub Transport Tests', function() {
     it('Should fire the events', function(done) {
         var envelopeSpy = sinon.spy();
         var dataSpy = sinon.spy();
+        var endSpy = sinon.spy();
         var client = stubTransport();
         client.on('envelope', envelopeSpy);
         client.on('data', dataSpy);
+        client.on('end', endSpy);
 
         var message = new Array(1024).join('teretere, vana kere\n');
         var envelope = {
@@ -73,6 +75,7 @@ describe('Stub Transport Tests', function() {
             expect(info.response.toString()).to.equal(message);
             expect(envelopeSpy.calledWith(envelope)).to.be.true;
             expect(dataSpy.calledWith(message)).to.be.true;
+            expect(endSpy.calledWith(info)).to.be.true;
             done();
         });
     });
