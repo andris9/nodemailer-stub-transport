@@ -4,6 +4,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 var chai = require('chai');
 var expect = chai.expect;
+var sinon = require('sinon');
 var stubTransport = require('../src/stub-transport');
 chai.Assertion.includeStack = true;
 var PassThrough = require('stream').PassThrough;
@@ -47,6 +48,34 @@ describe('Stub Transport Tests', function() {
         }, function(err, info) {
             expect(err).to.not.exist;
             expect(info.response.toString()).to.equal(message);
+            done();
+        });
+    });
+
+    it('Should fire the events', function(done) {
+        var envelopeSpy = sinon.spy();
+        var dataSpy = sinon.spy();
+        var endSpy = sinon.spy();
+        var client = stubTransport();
+        client.on('envelope', envelopeSpy);
+        client.on('data', dataSpy);
+        client.on('end', endSpy);
+
+        var message = new Array(1024).join('teretere, vana kere\n');
+        var envelope = {
+            from: 'test@valid.sender',
+            to: 'test@valid.recipient'
+        };
+
+        client.send({
+            data: {},
+            message: new MockBuilder(envelope, message)
+        }, function(err, info) {
+            expect(err).to.not.exist;
+            expect(info.response.toString()).to.equal(message);
+            expect(envelopeSpy.calledWith(envelope)).to.be.true;
+            expect(dataSpy.calledWith(message)).to.be.true;
+            expect(endSpy.calledWith(info)).to.be.true;
             done();
         });
     });
