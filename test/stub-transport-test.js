@@ -58,18 +58,20 @@ describe('Stub Transport Tests', function() {
         client.on('log', spy);
 
         var message = new Array(1024).join('teretere, vana kere\n');
+        var envelope = {
+            from: 'test@valid.sender',
+            to: 'test@valid.recipient'
+        };
 
         client.send({
             data: {},
-            message: new MockBuilder({
-                from: 'test@valid.sender',
-                to: 'test@valid.recipient'
-            }, message)
+            message: new MockBuilder(envelope, message)
         }, function(err, info) {
             expect(err).to.not.exist;
             expect(info.response.toString()).to.equal(message);
-            expect(spy.callCount).to.be.equal(1);
-            expect(spy.firstCall.args).to.be.eql([{type: 'message', message: message}]);
+            expect(spy.callCount).to.be.equal(2);
+            expect(spy.firstCall.args).to.be.eql([{type: 'envelope', message: envelope}]);
+            expect(spy.secondCall.args).to.be.eql([{type: 'message', message: message}]);
             done();
         });
     });
