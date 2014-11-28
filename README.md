@@ -31,6 +31,20 @@ transport.sendMail(mailData, function(err, info){
 });
 ```
 
+### Events
+
+#### 'log'
+
+Debug log object with `{type, message}`
+
+#### 'envelope'
+
+Envelope object
+
+#### 'data'
+
+Data chunk
+
 ## License
 
 **MIT**
