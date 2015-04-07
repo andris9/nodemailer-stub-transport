@@ -79,4 +79,23 @@ describe('Stub Transport Tests', function() {
             done();
         });
     });
+
+    it('Should return an error', function(done) {
+        var client = stubTransport({
+            error: new Error('Invalid recipient')
+        });
+
+        var message = new Array(1024).join('teretere, vana kere\n');
+
+        client.send({
+            data: {},
+            message: new MockBuilder({
+                from: 'test@valid.sender',
+                to: 'test@valid.recipient'
+            }, message)
+        }, function(err) {
+            expect(err).to.exist;
+            done();
+        });
+    });
 });

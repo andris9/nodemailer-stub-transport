@@ -1,6 +1,6 @@
 {
   "name": "nodemailer-stub-transport",
-  "version": "0.1.5",
+  "version": "1.0.0",
   "description": "Stub transport for Nodemailer",
   "main": "src/stub-transport.js",
   "scripts": {
@@ -22,10 +22,10 @@
   "homepage": "http://github.com/andris9/nodemailer-stub-transport",
   "dependencies": {},
   "devDependencies": {
-    "chai": "~1.8.1",
-    "grunt": "~0.4.1",
-    "grunt-contrib-jshint": "~0.8.0",
-    "grunt-mocha-test": "~0.10.0",
-    "sinon": "^1.9.0"
+    "chai": "~2.2.0",
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.11.1",
+    "grunt-mocha-test": "~0.12.7",
+    "sinon": "^1.14.1"
   }
 }

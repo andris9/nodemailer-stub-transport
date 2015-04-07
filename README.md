@@ -31,11 +31,25 @@ transport.sendMail(mailData, function(err, info){
 });
 ```
 
+## Errors
+
+There's not much to error about but if you want the sending to fail and return an error then you can do this by specifying an error option when setting up the transport
+.
+
+```javascript
+var transport = nodemailer.createTransport(stubTransport({
+    error: new Error('Invalid recipient')
+}));
+transport.sendMail(mailData, function(err, info){
+    console.log(err.message); // 'Invalid recipient'
+});
+```
+
 ### Events
 
 #### 'log'
 
-Debug log object with `{type, message}`
+Debug log object with `{name, version, level, type, message}`
 
 #### 'envelope'
 
