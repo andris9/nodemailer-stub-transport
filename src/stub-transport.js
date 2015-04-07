@@ -20,7 +20,7 @@ StubTransport.prototype.send = function(mail, callback) {
 
     if (this.options.error) {
         setImmediate(function() {
-            callback(new Error(this.error));
+            callback(new Error(this.options.error));
         }.bind(this));
         return;
     }
