@@ -4,6 +4,9 @@ Applies for Nodemailer v1.0
 
 Stub transport does not send anything, it builds the mail stream into a single Buffer and returns it with the sendMail callback. This is useful for testing the emails before actually sending anything.
 
+[![Build Status](https://travis-ci.org/andris9/nodemailer-stub-transport.svg?branch=master)](https://travis-ci.org/andris9/nodemailer-stub-transport)
+<a href="http://badge.fury.io/js/nodemailer-stub-transport"><img src="https://badge.fury.io/js/nodemailer-stub-transport.svg" alt="NPM version" height="18"></a>
+
 ## Usage
 
 Install with npm
