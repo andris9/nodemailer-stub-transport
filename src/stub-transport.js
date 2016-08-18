@@ -37,6 +37,12 @@ StubTransport.prototype.send = function(mail, callback) {
     this._log('info', 'envelope', JSON.stringify(envelope));
     this.emit('envelope', envelope);
 
+    message.on('error', function(err) {
+      setImmediate(function() {
+        callback(err);
+      });
+    });
+
     message.on('data', function(chunk) {
         chunks.push(chunk);
         chunklen += chunk.length;
