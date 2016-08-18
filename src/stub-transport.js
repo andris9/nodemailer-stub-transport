@@ -16,6 +16,10 @@ function StubTransport(options) {
 }
 util.inherits(StubTransport, EventEmitter);
 
+StubTransport.prototype.isIdle = function () {
+	return true;
+};
+
 StubTransport.prototype.send = function(mail, callback) {
 
     if (this.options.error) {
